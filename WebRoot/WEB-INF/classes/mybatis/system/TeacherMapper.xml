@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TeacherMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into TEACHER(
+			teacher_id,	
+			teacher_no,	
+			teacher_school,	
+			teacher_major,	
+			teacher_academy,	
+			teacher_name,	
+			teacher_gender,	
+			teacher_password,	
+			teacher_address,	
+			teacher_phone,	
+			teacher_email,	
+			teacher_entrydate,	
+			teacher_datetime,	
+			teacher_status,	
+			teacher_createtime	
+			
+		) values (
+			#{teacherId},
+			#{teacherNo},
+			#{teacherSchool},
+			#{teacherMajor},
+			#{teacherAcademy},
+			#{teacherName},
+			#{teacherGender},
+			#{teacherPassword},
+			#{teacherAddress},
+			#{teacherPhone},
+			#{teacherEmail},
+			#{teacherEntrydate},
+			#{teacherDatetime},
+			#{teacherStatus},
+			#{teacherCreatetime}
+			
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from TEACHER
+		where 
+				teacher_id= #{teacherId}
+			
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  TEACHER
+			set 
+		teacher_no = #{teacherNo},
+		teacher_school = #{teacherSchool},
+		teacher_major = #{teacherMajor},
+		teacher_academy = #{teacherAcademy},
+		teacher_name = #{teacherName},
+		teacher_gender = #{teacherGender},
+		teacher_password = #{teacherPassword},
+		<if test="teacherAddress!=null and teacherAddress!=''">
+		teacher_address = #{teacherAddress},
+		</if>
+		teacher_phone = #{teacherPhone},
+		teacher_email = #{teacherEmail},
+		teacher_entrydate = #{teacherEntrydate},
+		teacher_datetime = #{teacherDatetime},
+		teacher_status = #{teacherStatus}
+			where 
+		teacher_id = #{teacherId}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			teacher_id,	
+			teacher_no,	
+			teacher_school,	
+			teacher_major,	
+			teacher_academy,	
+			teacher_name,	
+			teacher_gender,	
+			teacher_password,	
+			teacher_address,	
+			teacher_phone,	
+			teacher_email,	
+			teacher_entrydate,	
+			teacher_datetime,	
+			teacher_status,	
+			teacher_createtime	
+			
+		from 
+			TEACHER
+		where 
+			teacher_id = #{teacherId}
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="getUserByNameAndPwd" parameterType="pd" resultType="pd">
+		select 
+			teacher_id,	
+			teacher_no,	
+			teacher_school,	
+			teacher_major,	
+			teacher_academy,	
+			teacher_name,	
+			teacher_gender,	
+			teacher_password,	
+			teacher_address,	
+			teacher_phone,	
+			teacher_email,	
+			teacher_entrydate,	
+			teacher_datetime,	
+			teacher_status,	
+			teacher_createtime	
+		from 
+			TEACHER
+		where 
+			teacher_no = #{USERNAME}
+		and teacher_password=#{PASSWORD}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.teacher_id,	
+				a.teacher_no,	
+				a.teacher_school,	
+				a.teacher_major,	
+				a.teacher_academy,	
+				a.teacher_name,	
+				a.teacher_gender,	
+				a.teacher_password,	
+				a.teacher_address,	
+				a.teacher_phone,	
+				a.teacher_email,	
+				a.teacher_entrydate,	
+				a.teacher_datetime,	
+				a.teacher_status,	
+				a.teacher_createtime	
+		from 
+				TEACHER a 
+		where 1=1 
+		<if test="pd.teacherName != null and pd.teacherName != ''">
+            and a.teacher_name LIKE CONCAT(CONCAT('%', #{pd.teacherName}),'%')
+        </if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.teacher_id,		
+				a.teacher_no,		
+				a.teacher_school,		
+				a.teacher_major,		
+				a.teacher_academy,		
+				a.teacher_name,		
+				a.teacher_gender,		
+				a.teacher_password,		
+				a.teacher_address,		
+				a.teacher_phone,		
+				a.teacher_email,		
+				a.teacher_entrydate,		
+				a.teacher_datetime,		
+				a.teacher_status,		
+				a.teacher_createtime		
+		from 
+				TEACHER a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from TEACHER
+		where 
+			teacher_id 
+															 in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="StudentMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into STUDENT(
+			student_id,	
+			student_creditselect,	
+			student_entrydate,	
+			student_earnedcredit,	
+			student_repaircredit,	
+			student_unearnedcredit,	
+			student_class,	
+			student_major,	
+			student_academy,	
+			student_school,	
+			student_name,	
+			student_no,	
+			student_password,	
+			student_gender,	
+			student_datetime,	
+			student_phone,	
+			student_email,	
+			student_address,	
+			student_status,	
+			student_createtime	
+			
+		) values (
+			#{studentId},
+			#{studentCreditselect},
+			#{studentEntrydate},
+			#{studentEarnedcredit},
+			#{studentRepaircredit},
+			#{studentUnearnedcredit},
+			#{studentClass},
+			#{studentMajor},
+			#{studentAcademy},
+			#{studentSchool},
+			#{studentName},
+			#{studentNo},
+			#{studentPassword},
+			#{studentGender},
+			#{studentDatetime},
+			#{studentPhone},
+			#{studentEmail},
+			#{studentAddress},
+			#{studentStatus},
+			#{studentCreatetime}
+			
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from STUDENT
+		where 
+				student_id= #{studentId}
+			
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  STUDENT
+			set 
+		student_class = #{studentClass},
+		student_major = #{studentMajor},
+		student_academy = #{studentAcademy},
+		student_school = #{studentSchool},
+		student_name = #{studentName},
+		<if test="studentPassword!=null and studentPassword!=''">
+		student_password = #{studentPassword},
+		</if>
+		
+		student_gender = #{studentGender},
+		student_datetime = #{studentDatetime},
+		student_phone = #{studentPhone},
+		student_email = #{studentEmail},
+		student_address = #{studentAddress},
+		student_status = #{studentStatus}
+			where 
+		student_id = #{studentId}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			student_id,	
+			student_creditselect,	
+			student_entrydate,	
+			student_earnedcredit,	
+			student_repaircredit,	
+			student_unearnedcredit,	
+			student_class,	
+			student_major,	
+			student_academy,	
+			student_school,	
+			student_name,	
+			student_no,	
+			student_password,	
+			student_gender,	
+			student_datetime,	
+			student_phone,	
+			student_email,	
+			student_address,	
+			student_status,	
+			student_createtime	
+			
+		from 
+			STUDENT
+		where 
+			student_id = #{studentId}
+	</select>
+	<!-- 通过ID获取数据 -->
+	<select id="getUserByNameAndPwd" parameterType="pd" resultType="pd">
+		select 
+			student_id,	
+			student_creditselect,	
+			student_entrydate,	
+			student_earnedcredit,	
+			student_repaircredit,	
+			student_unearnedcredit,	
+			student_class,	
+			student_major,	
+			student_academy,	
+			student_school,	
+			student_name,	
+			student_no,	
+			student_password,	
+			student_gender,	
+			student_datetime,	
+			student_phone,	
+			student_email,	
+			student_address,	
+			student_status,	
+			student_createtime	
+			
+		from 
+			STUDENT
+		where 
+			student_no =#{USERNAME}
+		and student_password=#{PASSWORD}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.student_id,	
+				a.student_creditselect,	
+				a.student_entrydate,	
+				a.student_earnedcredit,	
+				a.student_repaircredit,	
+				a.student_unearnedcredit,	
+				a.student_class,	
+				a.student_major,	
+				a.student_academy,	
+				a.student_school,	
+				a.student_name,	
+				a.student_no,	
+				a.student_password,	
+				a.student_gender,	
+				a.student_datetime,	
+				a.student_phone,	
+				a.student_email,	
+				a.student_address,	
+				a.student_status,	
+				a.student_createtime	
+		from 
+				STUDENT a 
+			where 1=1 
+		<if test="pd.studentName != null and pd.studentName != ''">
+            and a.student_name LIKE CONCAT(CONCAT('%', #{pd.studentName}),'%')
+        </if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.student_id,		
+				a.student_creditselect,		
+				a.student_entrydate,		
+				a.student_earnedcredit,		
+				a.student_repaircredit,		
+				a.student_unearnedcredit,		
+				a.student_class,		
+				a.student_major,		
+				a.student_academy,		
+				a.student_school,		
+				a.student_name,		
+				a.student_no,		
+				a.student_password,		
+				a.student_gender,		
+				a.student_datetime,		
+				a.student_phone,		
+				a.student_email,		
+				a.student_address,		
+				a.student_status,		
+				a.student_createtime		
+		from 
+				STUDENT a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from STUDENT
+		where 
+			student_id 
+																				 in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

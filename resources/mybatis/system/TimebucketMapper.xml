@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TimebucketMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into TIMEBUCKET(
+			time_id,	
+			time_begin_week,	
+			time_end_week,	
+			time_week,	
+			time_begin_section,	
+			time_end_section,	
+			teacher_id,	
+			teach_build_id,	
+			teach_room_id,	
+			count,	
+			create_time,	
+			time_createtime	
+			
+		) values (
+			#{timeId},
+			#{timeBeginWeek},
+			#{timeEndWeek},
+			#{timeWeek},
+			#{timeBeginSection},
+			#{timeEndSection},
+			#{teacherId},
+			#{teachBuildId},
+			#{teachRoomId},
+			#{count},
+			#{createTime},
+			#{timeCreatetime}
+			
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from TIMEBUCKET
+		where 
+				time_id= #{timeId}
+			
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  TIMEBUCKET
+			set 
+		time_id = #{timeId},
+		time_begin_week = #{timeBeginWeek},
+		time_end_week = #{timeEndWeek},
+		time_week = #{timeWeek},
+		time_begin_section = #{timeBeginSection},
+		time_end_section = #{timeEndSection},
+		teacher_id = #{teacherId},
+		teach_build_id = #{teachBuildId},
+		teach_room_id = #{teachRoomId},
+		count = #{count},
+		create_time = #{createTime},
+		time_createtime = #{timeCreatetime}
+			where 
+		time_id = #{timeId}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			time_id,	
+			time_begin_week,	
+			time_end_week,	
+			time_week,	
+			time_begin_section,	
+			time_end_section,	
+			teacher_id,	
+			teach_build_id,	
+			teach_room_id,	
+			count,	
+			create_time,	
+			time_createtime	
+			
+		from 
+			TIMEBUCKET
+		where 
+			time_id = #{timeId}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.time_id,	
+				a.time_begin_week,	
+				a.time_end_week,	
+				a.time_week,	
+				a.time_begin_section,	
+				a.time_end_section,	
+				a.teacher_id,	
+				a.teach_build_id,	
+				a.teach_room_id,	
+				a.count,	
+				a.create_time,	
+				a.time_createtime	
+		from 
+				TIMEBUCKET a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.time_id,		
+				a.time_begin_week,		
+				a.time_end_week,		
+				a.time_week,		
+				a.time_begin_section,		
+				a.time_end_section,		
+				a.teacher_id,		
+				a.teach_build_id,		
+				a.teach_room_id,		
+				a.count,		
+				a.create_time,		
+				a.time_createtime		
+		from 
+				TIMEBUCKET a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from TIMEBUCKET
+		where 
+			time_id 
+												 in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

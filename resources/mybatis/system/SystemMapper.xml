@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SystemMapper">
+	
+   <select id="searchTableByName" parameterType="pd" resultType="pd">
+	   <!-- SELECT column_name,data_type,column_key,column_comment FROM INFORMATION_SCHEMA.Columns WHERE table_name=#{tableName} GROUP BY column_name,data_type,column_key,column_comment -->
+ select column_name,data_type,column_key,column_comment from information_schema.columns where table_name=#{tableName}  and TABLE_SCHEMA='ft'
+   </select>
+    <select id="searchTableNameByBase" resultType="pd">
+	select table_name from information_schema.tables where table_schema='ft' and table_type='base table'
+   </select>
+
+</mapper>

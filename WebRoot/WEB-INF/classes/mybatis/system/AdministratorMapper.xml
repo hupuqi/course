@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AdministratorMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into ADMINISTRATOR(
+			administrator_id,	
+			administrator_no,	
+			administrator_school,	
+			administrator_academy,	
+			administrator_name,	
+			administrator_gender,	
+			administrator_password,	
+			administrator_address,	
+			administrator_phone,	
+			administrator_email,	
+			administrator_createtime	
+			
+		) values (
+			#{administratorId},
+			#{administratorNo},
+			#{administratorSchool},
+			#{administratorAcademy},
+			#{administratorName},
+			#{administratorGender},
+			#{administratorPassword},
+			#{administratorAddress},
+			#{administratorPhone},
+			#{administratorEmail},
+			#{administratorCreatetime}
+			
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from ADMINISTRATOR
+		where 
+				administrator_id= #{administratorId}
+			
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  ADMINISTRATOR
+			set 
+		administrator_id = #{administratorId},
+		administrator_no = #{administratorNo},
+		administrator_school = #{administratorSchool},
+		administrator_academy = #{administratorAcademy},
+		administrator_name = #{administratorName},
+		administrator_gender = #{administratorGender},
+		<if test="administratorPassword!=null and administratorPassword!=''">
+		administrator_password = #{administratorPassword},
+		</if>
+		
+		administrator_address = #{administratorAddress},
+		administrator_phone = #{administratorPhone},
+		administrator_email = #{administratorEmail}
+			where 
+		administrator_id = #{administratorId}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			administrator_id,	
+			administrator_no,	
+			administrator_school,	
+			administrator_academy,	
+			administrator_name,	
+			administrator_gender,	
+			administrator_password,	
+			administrator_address,	
+			administrator_phone,	
+			administrator_email,	
+			administrator_createtime	
+			
+		from 
+			ADMINISTRATOR
+		where 
+			administrator_id = #{administratorId}
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="getUserByNameAndPwd" parameterType="pd" resultType="pd">
+		select 
+			administrator_id,	
+			administrator_no,	
+			administrator_school,	
+			administrator_academy,	
+			administrator_name,	
+			administrator_gender,	
+			administrator_password,	
+			administrator_address,	
+			administrator_phone,	
+			administrator_email,	
+			administrator_createtime	
+			
+		from 
+			ADMINISTRATOR
+		where 
+			administrator_no = #{USERNAME}
+		and administrator_password=#{PASSWORD}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.administrator_id,	
+				a.administrator_no,	
+				a.administrator_school,	
+				a.administrator_academy,	
+				a.administrator_name,	
+				a.administrator_gender,	
+				a.administrator_password,	
+				a.administrator_address,	
+				a.administrator_phone,	
+				a.administrator_email,	
+				a.administrator_createtime	
+		from 
+				ADMINISTRATOR a 
+		where 1=1 
+		<if test="pd.administratorName != null and pd.administratorName != ''">
+            and a.administrator_name LIKE CONCAT(CONCAT('%', #{pd.administratorName}),'%')
+        </if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.administrator_id,		
+				a.administrator_no,		
+				a.administrator_school,		
+				a.administrator_academy,		
+				a.administrator_name,		
+				a.administrator_gender,		
+				a.administrator_password,		
+				a.administrator_address,		
+				a.administrator_phone,		
+				a.administrator_email,		
+				a.administrator_createtime		
+		from 
+				ADMINISTRATOR a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from ADMINISTRATOR
+		where 
+			administrator_id 
+											 in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

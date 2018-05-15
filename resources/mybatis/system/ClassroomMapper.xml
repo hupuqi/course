@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ClassroomMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into CLASSROOM(
+			classroom_id,	
+			classroom_name,	
+			teachingbuilding_id,	
+			classroom_createtime	
+			
+		) values (
+			#{classroomId},
+			#{classroomName},
+			#{teachingbuildingId},
+			#{classroomCreatetime}
+			
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from CLASSROOM
+		where 
+				classroom_id= #{classroomId}
+			
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  CLASSROOM
+			set 
+		classroom_name = #{classroomName}
+			where 
+		classroom_id = #{classroomId}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			classroom_id,	
+			classroom_name,	
+			teachingbuilding_id,	
+			classroom_createtime	
+			
+		from 
+			CLASSROOM
+		where 
+			classroom_id = #{classroomId}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.classroom_id,	
+				a.classroom_name,	
+				a.teachingbuilding_id,	
+				a.classroom_createtime	
+		from 
+				CLASSROOM a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.classroom_id,		
+				a.classroom_name,		
+				a.teachingbuilding_id,	
+				a.classroom_createtime		
+		from 
+				CLASSROOM a 
+		where 1=1
+		<if test="teachingbuildingId!=null and teachingbuildingId!=''">
+			and a.teachingbuilding_id=#{teachingbuildingId}
+		</if>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from CLASSROOM
+		where 
+			classroom_id 
+				 in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>
